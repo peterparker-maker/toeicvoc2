@@ -200,7 +200,24 @@
          * 畫面上方的「學習進度」按鈕會自動產生，不需要改 HTML 或其他程式碼。
          * ============================================================
          */
-        const dataSet = {
+        let dataSet = {};
+
+        // 從 data.json 加載單字數據
+        async function loadData() {
+            try {
+                const response = await fetch('data.json');
+                dataSet = await response.json();
+                // 初始化應用
+                buildDaySelector();
+                initApp();
+            } catch (error) {
+                console.error('Failed to load data:', error);
+                document.getElementById('header-subtitle').innerText = '無法加載數據';
+            }
+        }
+
+        /* OLD HARDCODED DATA - Now loaded from data.json
+        const oldDataSet = {
             1: {
                 title: "Day 1 辦公室常用單字",
                 vocabulary: [
@@ -255,21 +272,8 @@
                     { q: "I would like to _______ a new marketing strategy to reach younger customers.", options: ["revise", "propose", "negotiate", "delegate"], ans: "propose", trans: "我想提議一個新的行銷策略，以接觸更年輕的客群。" }
                 ]
             }
-
-            /*
-             * 新增 Day 3 範例（複製貼上後填內容即可）：
-             *
-             * 3: {
-             *     title: "Day 3 ...",
-             *     vocabulary: [
-             *         { word: "...", zh: "...", eg: "...", trans: "...", hint: "..." },
-             *     ],
-             *     quiz: [
-             *         { q: "...", options: ["...", "...", "...", "..."], ans: "...", trans: "..." },
-             *     ]
-             * },
-             */
         };
+        */
 
         // 當前應用狀態
         let currentDay = 1;
@@ -290,8 +294,7 @@
 
         // 初始化
         window.onload = function() {
-            buildDaySelector();
-            initApp();
+            loadData();
         };
 
         // 依 dataSet 的 key 動態產生「學習進度」按鈕，新增 Day 時不需要改 HTML

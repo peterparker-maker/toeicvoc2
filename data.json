@@ -1,0 +1,56 @@
+{
+  "1": {
+    "title": "Day 1 辦公室常用單字",
+    "vocabulary": [
+      {"word": "agenda (n.)", "zh": "議程；討論主題", "eg": "The chairperson added three new items to the meeting agenda.", "trans": "主席在會議議程中增加了三個新項目。", "hint": "會議討論項目的清單。"},
+      {"word": "schedule (n.)", "zh": "日程表；進度表", "eg": "We are working hard to complete the project ahead of schedule.", "trans": "我們正努力工作，以求在預定進度之前完成這項專案。", "hint": "事情安排的時間順序或進度。"},
+      {"word": "postpone (v.)", "zh": "延期、延後", "eg": "The board decided to postpone the discussion until next Tuesday.", "trans": "董事會決定將這項討論延期到下週二。", "hint": "把事情往後挪到另一個時間。"},
+      {"word": "colleague (n.)", "zh": "同事", "eg": "Ms. Lin received a beautiful gift from a colleague on her last day.", "trans": "林小姐在上班的最後一天收到了一位同事送的漂亮禮物。", "hint": "在同一家公司或單位工作的人。"},
+      {"word": "document (n.)", "zh": "文件", "eg": "Please review the attached document before signing the agreement.", "trans": "在簽署協議之前，請先審閱隨附的文件。", "hint": "正式的書面資料或電子檔案。"},
+      {"word": "confirm (v.)", "zh": "確認、證實", "eg": "Clients must reply to this email to confirm their hotel reservations.", "trans": "客戶必須回覆這封電子郵件以確認他們的飯店預訂。", "hint": "確保某件事實或安排無誤。"},
+      {"word": "notice (n.)", "zh": "通知、公告", "eg": "The office will remain closed until further notice due to renovations.", "trans": "由於裝修，辦公室將保持關閉，直到另行通知。", "hint": "正式傳達訊息的公告。"},
+      {"word": "attend (v.)", "zh": "參加、出席", "eg": "All department managers are required to attend the annual conference.", "trans": "所有部門經理都必須出席年度會議。", "hint": "到場參加活動或會議。"},
+      {"word": "remind (v.)", "zh": "提醒", "eg": "The assistant will remind the director about the upcoming press event.", "trans": "助理會提醒主任關於即將舉行的記者會活動。", "hint": "讓某人想起該做的事。"},
+      {"word": "contact (v.)", "zh": "聯絡、接觸", "eg": "If you have any questions, please feel free to contact our support team.", "trans": "如果您有任何問題，請隨時與我們的支援團隊聯絡。", "hint": "與某人取得聯繫。"}
+    ],
+    "quiz": [
+      {"q": "The chairperson added three new items to the meeting _______.", "options": ["agenda", "document", "colleague", "notice"], "ans": "agenda", "trans": "主席在會議議程中增加了三個新項目。"},
+      {"q": "We are working hard to complete the project ahead of _______.", "options": ["contract", "strategy", "schedule", "benefit"], "ans": "schedule", "trans": "我們正努力工作，以求在預定進度之前完成這項專案。"},
+      {"q": "The board decided to _______ the discussion until next Tuesday.", "options": ["attend", "postpone", "confirm", "remind"], "ans": "postpone", "trans": "董事會決定將這項討論延期到下週二。"},
+      {"q": "Ms. Lin received a beautiful gift from a _______ on her last day.", "options": ["strategy", "candidate", "client", "colleague"], "ans": "colleague", "trans": "林小姐在上班的最後一天收到了一位同事送的漂亮禮物。"},
+      {"q": "Please review the attached _______ before signing the agreement.", "options": ["agenda", "notice", "document", "procedure"], "ans": "document", "trans": "在簽署協議之前，請先審閱隨附的文件。"},
+      {"q": "Clients must reply to this email to _______ their hotel reservations.", "options": ["confirm", "postpone", "attend", "contact"], "ans": "confirm", "trans": "客戶必須回覆這封電子郵件以確認他們的飯店預訂。"},
+      {"q": "The office will remain closed until further _______ due to renovations.", "options": ["schedule", "notice", "document", "agenda"], "ans": "notice", "trans": "由於裝修，辦公室將保持關閉，直到另行通知。"},
+      {"q": "All department managers are required to _______ the annual conference.", "options": ["remind", "contact", "attend", "postpone"], "ans": "attend", "trans": "所有部門經理都必須出席年度會議。"},
+      {"q": "The assistant will _______ the director about the upcoming press event.", "options": ["remind", "confirm", "notice", "attend"], "ans": "remind", "trans": "助理會提醒主任關於即將舉行的記者會活動。"},
+      {"q": "If you have any questions, please feel free to _______ our support team.", "options": ["postpone", "contact", "confirm", "remind"], "ans": "contact", "trans": "如果您有任何問題，請隨時與我們的支援團隊聯絡。"}
+    ]
+  },
+  "2": {
+    "title": "Day 2 會議與協商單字",
+    "vocabulary": [
+      {"word": "negotiate (v.)", "zh": "談判；協商", "eg": "The company is trying to negotiate a new contract with the supplier.", "trans": "公司正試圖與供應商協商一份新合約。", "hint": "討論以達成協議。"},
+      {"word": "propose (v.)", "zh": "提議；建議", "eg": "I would like to propose a short break before we continue the discussion.", "trans": "我想在我們繼續討論前提議休息片刻。", "hint": "提出一個計畫或想法供考慮。"},
+      {"word": "presentation (n.)", "zh": "簡報；演講", "eg": "She gave an impressive presentation on the latest market trends.", "trans": "她針對最新的市場趨勢做了一場令人印象深刻的簡報。", "hint": "向聽眾展示資訊的過程。"},
+      {"word": "delegate (v.)", "zh": "委派（權限、職務）；授權", "eg": "Effective managers know how to delegate tasks to their team members.", "trans": "優秀的經理知道如何將任務委派給團隊成員。", "hint": "將職責交給他人處理。"},
+      {"word": "deadline (n.)", "zh": "截止日期；期限", "eg": "We must work overtime to meet the deadline for the proposal.", "trans": "我們必須加班以趕上提案的截止日期。", "hint": "必須完成某事的最晚時間點。"},
+      {"word": "minutes (n. pl.)", "zh": "會議記錄", "eg": "Could you please take the minutes during today's staff meeting?", "trans": "可以請你在今天的員工會議中做會議記錄嗎？", "hint": "會議中討論與決定事項的正式紀錄。"},
+      {"word": "resolution (n.)", "zh": "（會議的）決議；正式決定", "eg": "The committee passed a resolution to increase the marketing budget.", "trans": "委員會通過了增加行銷預算的決議。", "hint": "會議中經過投票或同意後的最終決定。"},
+      {"word": "signature (n.)", "zh": "簽名", "eg": "We need the director's signature on this document before we can proceed.", "trans": "我們需要董事在文件上簽名後才能繼續進行。", "hint": "代表身分或同意的手寫姓名。"},
+      {"word": "approve (v.)", "zh": "核准；贊成", "eg": "The board will meet tomorrow to approve the new project plan.", "trans": "董事會將於明天開會以核准新的計畫案。", "hint": "正式同意或接受某事物。"},
+      {"word": "revise (v.)", "zh": "修訂；修改", "eg": "Based on the feedback, we need to revise the financial report.", "trans": "根據回饋意見，我們需要修訂財務報告。", "hint": "為了改善或更正而改變某物。"}
+    ],
+    "quiz": [
+      {"q": "The board of directors passed a _______ to expand the company's operations into Europe.", "options": ["resolution", "minutes", "signature", "deadline"], "ans": "resolution", "trans": "董事會通過了將公司業務拓展至歐洲的決議。"},
+      {"q": "It is important for managers to _______ tasks to their staff to ensure productivity.", "options": ["negotiate", "delegate", "propose", "revise"], "ans": "delegate", "trans": "經理將任務委派給員工以確保生產力是很重要的。"},
+      {"q": "The purchasing manager is scheduled to _______ the terms of the new agreement tomorrow morning.", "options": ["approve", "delegate", "negotiate", "revise"], "ans": "negotiate", "trans": "採購經理預計將於明天上午協商新協議的條款。"},
+      {"q": "The marketing director gave a very persuasive _______ about the annual budget.", "options": ["presentation", "resolution", "minutes", "signature"], "ans": "presentation", "trans": "行銷總監針對年度預算做了一場非常有說服力的簡報。"},
+      {"q": "All employees must submit their reports by the Friday _______ to avoid penalties.", "options": ["deadline", "minutes", "presentation", "resolution"], "ans": "deadline", "trans": "所有員工必須在週五的截止日期前提交報告，以免受罰。"},
+      {"q": "Please ensure that the _______ of the meeting are distributed to all attendees by tomorrow.", "options": ["signature", "minutes", "deadline", "presentation"], "ans": "minutes", "trans": "請確保在明天前將會議記錄發送給所有與會者。"},
+      {"q": "Based on the client's feedback, we need to _______ the initial architectural designs.", "options": ["approve", "revise", "propose", "delegate"], "ans": "revise", "trans": "根據客戶的回饋意見，我們需要修改初始的建築設計。"},
+      {"q": "The contract is not legally binding until it contains the CEO's _______.", "options": ["signature", "resolution", "presentation", "minutes"], "ans": "signature", "trans": "合約在蓋有執行長的簽名之前是不具法律效力的。"},
+      {"q": "The finance department needs to _______ the travel expenses before they can be reimbursed.", "options": ["negotiate", "approve", "propose", "delegate"], "ans": "approve", "trans": "財務部需要核准差旅費用後才能予以報銷。"},
+      {"q": "I would like to _______ a new marketing strategy to reach younger customers.", "options": ["revise", "propose", "negotiate", "delegate"], "ans": "propose", "trans": "我想提議一個新的行銷策略，以接觸更年輕的客群。"}
+    ]
+  }
+}

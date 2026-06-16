@@ -363,6 +363,12 @@
         }
 
         // =================== 閃卡邏輯 ===================
+        function highlightWord(sentence, word) {
+            const wordOnly = word.split(' ')[0];
+            const regex = new RegExp(`\\b${wordOnly}\\b`, 'gi');
+            return sentence.replace(regex, `<span class="font-bold text-amber-600">$&</span>`);
+        }
+
         function loadFlashcard() {
             const currentItem = activeVocabList[flashcardIndex];
 
@@ -371,7 +377,7 @@
 
             // 寫入背面
             document.getElementById('card-back-title').innerText = currentItem.zh;
-            document.getElementById('card-back-eg').innerText = currentItem.eg;
+            document.getElementById('card-back-eg').innerHTML = highlightWord(currentItem.eg, currentItem.word);
             document.getElementById('card-back-trans').innerText = currentItem.trans;
             document.getElementById('card-hint').innerText = currentItem.hint;
 

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="多益（TOEIC）核心單字互動學習系統，包含單字閃卡與隨機小考模式">
+    <title>多益核心單字高效學習系統</title>
+    <!-- 使用 Tailwind CSS 進行美化 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800 font-sans">
+
+    <div class="max-w-xl mx-auto px-4 py-8">
+        <!-- 標頭區 -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-extrabold text-indigo-600 tracking-tight">TOEIC 多益核心單字</h1>
+            <p id="header-subtitle" class="text-slate-500 mt-2">高效互動學習系統</p>
+        </header>
+
+        <!-- 控制面板：切換天數與模式 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 mb-6">
+            <div class="grid grid-cols-2 gap-4">
+                <!-- 天數選擇（動態產生按鈕，方便日後新增 Day） -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">學習進度</label>
+                    <div id="day-selector" class="flex rounded-lg bg-slate-100 p-1 gap-1 overflow-x-auto">
+                        <!-- 動態載入 -->
+                    </div>
+                </div>
+                <!-- 模式選擇 -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">學習模式</label>
+                    <div class="flex rounded-lg bg-slate-100 p-1">
+                        <button id="btn-mode-flashcard" onclick="switchMode('flashcard')" class="flex-1 py-1.5 text-sm font-medium rounded-md transition-all bg-white text-indigo-600 shadow-sm">單字閃卡</button>
+                        <button id="btn-mode-quiz" onclick="switchMode('quiz')" class="flex-1 py-1.5 text-sm font-medium rounded-md transition-all text-slate-600 hover:text-slate-900">隨機小考</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =================== 模式一：單字閃卡區域 =================== -->
+        <div id="flashcard-section" class="space-y-6">
+            <!-- 閃卡進度與隨機按鈕 -->
+            <div class="flex justify-between items-center text-sm text-slate-500">
+                <span id="flashcard-progress">進度：1 / 10</span>
+                <button onclick="shuffleFlashcards()" class="text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-1">
+                    🔄 隨機打亂
+                </button>
+            </div>
+
+            <!-- 閃卡卡片主體 -->
+            <div class="perspective-1000 w-full h-80 cursor-pointer" onclick="toggleFlip()">
+                <div id="flashcard-inner" class="relative w-full h-full transition-transform duration-500 transform-style-3d">
+
+                    <!-- 卡片正面 (英文) -->
+                    <div class="absolute w-full h-full backface-hidden flex flex-col justify-between p-8 bg-white rounded-3xl shadow-md border border-slate-100">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">FRONT</span>
+                            <!-- 發音按鈕 (阻止冒泡以免觸發翻牌) -->
+                            <button onclick="speakCurrentWord(event)" class="p-2 bg-slate-50 hover:bg-slate-100 text-indigo-600 rounded-full transition-colors" title="發音">
+                                🔊
+                            </button>
+                        </div>
+                        <div class="text-center my-auto">
+                            <h2 id="card-front-text" class="text-3xl font-bold text-slate-800">agenda (n.)</h2>
+                        </div>
+                        <div class="text-center text-xs text-slate-400">
+                            💡 點擊卡片翻面看解析
+                        </div>
+                    </div>
+
+                    <!-- 卡片背面 (中文/例句) -->
+                    <div class="absolute w-full h-full backface-hidden rotate-y-180 flex flex-col justify-between p-6 bg-indigo-50/60 rounded-3xl shadow-md border border-indigo-100/50">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-indigo-500 uppercase tracking-wider">BACK</span>
+                            <span class="text-xs text-slate-400">點擊任意處翻回正面</span>
+                        </div>
+                        <div class="overflow-y-auto my-auto pr-1">
+                            <h3 id="card-back-title" class="text-xl font-bold text-indigo-900 mb-3">議程；討論主題</h3>
+                            <div class="bg-white/80 rounded-xl p-3 border border-indigo-100/40 text-left">
+                                <p class="text-xs font-semibold text-slate-400 mb-1">例句 (Example)</p>
+                                <p id="card-back-eg" class="text-sm font-medium text-slate-700 leading-relaxed">The chairperson added three new items to the meeting agenda.</p>
+                                <p id="card-back-trans" class="text-sm text-indigo-600 font-medium mt-1">主席在會議議程中增加了三個新項目。</p>
+                            </div>
+                        </div>
+                        <!-- 小提示區 -->
+                        <div class="mt-2 text-left bg-indigo-100/30 rounded-lg px-3 py-1.5 border border-indigo-100/50">
+                            <p class="text-[11px] text-indigo-500 font-bold">HINT</p>
+                            <p id="card-hint" class="text-xs text-indigo-900">會議討論項目的清單。</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 閃卡底部控制 -->
+            <div class="flex justify-between items-center gap-4">
+                <button onclick="prevCard()" class="flex-1 py-3 px-4 bg-white hover:bg-slate-50 text-slate-700 font-semibold rounded-xl border border-slate-200 transition-colors shadow-sm">
+                    上一個
+                </button>
+                <button id="btn-show-hint" onclick="toggleHint(event)" class="px-5 py-3 bg-amber-50 hover:bg-amber-100 text-amber-700 font-semibold rounded-xl border border-amber-200 transition-colors shadow-sm">
+                    💡 提示
+                </button>
+                <button onclick="nextCard()" class="flex-1 py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-colors shadow-md">
+                    下一個
+                </button>
+            </div>
+        </div>
+
+        <!-- =================== 模式二：互動小考區域 =================== -->
+        <div id="quiz-section" class="hidden space-y-6">
+            <!-- 答題進度條 -->
+            <div id="quiz-progress-wrapper">
+                <div class="flex justify-between items-center text-sm text-slate-500 mb-2">
+                    <span id="quiz-progress-text">第 1 / 10 題</span>
+                    <span id="quiz-score-badge" class="bg-indigo-50 text-indigo-700 px-2.5 py-0.5 rounded-full font-semibold text-xs">目前得分：0 分</span>
+                </div>
+                <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                    <div id="quiz-progress-bar" class="bg-indigo-600 h-full transition-all duration-300" style="width: 10%"></div>
+                </div>
+            </div>
+
+            <!-- 問題主體 -->
+            <div id="quiz-question-wrapper" class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                <p class="text-xs font-bold text-indigo-500 mb-2">請選擇最適合的單字填入空格中：</p>
+                <p id="quiz-question-text" class="text-lg font-bold text-slate-800 leading-relaxed">
+                    The chairperson added three new items to the meeting _______.
+                </p>
+            </div>
+
+            <!-- 選項按鈕組 -->
+            <div id="quiz-options-container" class="space-y-3">
+                <!-- 動態載入選項 -->
+            </div>
+
+            <!-- 下一題與解析說明 -->
+            <div id="quiz-feedback-box" class="hidden bg-slate-100 rounded-2xl p-5 border border-slate-200 space-y-3">
+                <div class="flex items-center gap-2">
+                    <span id="feedback-emoji" class="text-2xl">🎉</span>
+                    <span id="feedback-status" class="text-base font-bold">回答正確！</span>
+                </div>
+                <p id="feedback-explanation" class="text-sm text-slate-600 leading-relaxed">
+                    這裡會顯示例句的整句翻譯。
+                </p>
+                <button id="btn-next-question" onclick="nextQuestion()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-colors shadow-md">
+                    下一題 ➔
+                </button>
+            </div>
+
+            <!-- 測驗結算畫面 -->
+            <div id="quiz-result-screen" class="hidden bg-white rounded-2xl shadow-md border border-slate-100 p-8 text-center space-y-6">
+                <div>
+                    <span class="text-5xl">🏆</span>
+                    <h3 class="text-2xl font-bold text-slate-800 mt-4">測驗結束！</h3>
+                    <p class="text-slate-500 mt-1">恭喜你完成了這回的多益單字測驗！</p>
+                </div>
+
+                <div class="bg-indigo-50/50 py-6 rounded-2xl border border-indigo-100/50 max-w-xs mx-auto">
+                    <p class="text-sm text-indigo-600 font-semibold uppercase tracking-wider">最終得分</p>
+                    <p class="text-6xl font-black text-indigo-600 mt-1" id="quiz-final-score">90</p>
+                    <p class="text-xs text-slate-400 mt-2" id="quiz-correct-count">答對 9 題 / 共 10 題</p>
+                </div>
+
+                <div class="flex gap-4">
+                    <button onclick="restartQuiz()" class="flex-1 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-colors shadow-md">
+                        再試一次
+                    </button>
+                    <button onclick="switchMode('flashcard')" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition-colors">
+                        返回單字卡
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- =================== 核心 JavaScript 邏輯 =================== -->
+    <script>
+        /*
+         * ============================================================
+         * 資料集定義
+         * ------------------------------------------------------------
+         * 之後要新增 Day 3、Day 4... 時，直接在 dataSet 物件裡
+         * 照同樣格式加上新的 key（例如 3, 4）即可，
+         * 畫面上方的「學習進度」按鈕會自動產生，不需要改 HTML 或其他程式碼。
+         * ============================================================
+         */
+        const dataSet = {
+            1: {
+                title: "Day 1 辦公室常用單字",
+                vocabulary: [
+                    { word: "agenda (n.)", zh: "議程；討論主題", eg: "The chairperson added three new items to the meeting agenda.", trans: "主席在會議議程中增加了三個新項目。", hint: "會議討論項目的清單。" },
+                    { word: "schedule (n.)", zh: "日程表；進度表", eg: "We are working hard to complete the project ahead of schedule.", trans: "我們正努力工作，以求在預定進度之前完成這項專案。", hint: "事情安排的時間順序或進度。" },
+                    { word: "postpone (v.)", zh: "延期、延後", eg: "The board decided to postpone the discussion until next Tuesday.", trans: "董事會決定將這項討論延期到下週二。", hint: "把事情往後挪到另一個時間。" },
+                    { word: "colleague (n.)", zh: "同事", eg: "Ms. Lin received a beautiful gift from a colleague on her last day.", trans: "林小姐在上班的最後一天收到了一位同事送的漂亮禮物。", hint: "在同一家公司或單位工作的人。" },
+                    { word: "document (n.)", zh: "文件", eg: "Please review the attached document before signing the agreement.", trans: "在簽署協議之前，請先審閱隨附的文件。", hint: "正式的書面資料或電子檔案。" },
+                    { word: "confirm (v.)", zh: "確認、證實", eg: "Clients must reply to this email to confirm their hotel reservations.", trans: "客戶必須回覆這封電子郵件以確認他們的飯店預訂。", hint: "確保某件事實或安排無誤。" },
+                    { word: "notice (n.)", zh: "通知、公告", eg: "The office will remain closed until further notice due to renovations.", trans: "由於裝修，辦公室將保持關閉，直到另行通知。", hint: "正式傳達訊息的公告。" },
+                    { word: "attend (v.)", zh: "參加、出席", eg: "All department managers are required to attend the annual conference.", trans: "所有部門經理都必須出席年度會議。", hint: "到場參加活動或會議。" },
+                    { word: "remind (v.)", zh: "提醒", eg: "The assistant will remind the director about the upcoming press event.", trans: "助理會提醒主任關於即將舉行的記者會活動。", hint: "讓某人想起該做的事。" },
+                    { word: "contact (v.)", zh: "聯絡、接觸", eg: "If you have any questions, please feel free to contact our support team.", trans: "如果您有任何問題，請隨時與我們的支援團隊聯絡。", hint: "與某人取得聯繫。" }
+                ],
+                quiz: [
+                    { q: "The chairperson added three new items to the meeting _______.", options: ["agenda", "document", "colleague", "notice"], ans: "agenda", trans: "主席在會議議程中增加了三個新項目。" },
+                    { q: "We are working hard to complete the project ahead of _______.", options: ["contract", "strategy", "schedule", "benefit"], ans: "schedule", trans: "我們正努力工作，以求在預定進度之前完成這項專案。" },
+                    { q: "The board decided to _______ the discussion until next Tuesday.", options: ["attend", "postpone", "confirm", "remind"], ans: "postpone", trans: "董事會決定將這項討論延期到下週二。" },
+                    { q: "Ms. Lin received a beautiful gift from a _______ on her last day.", options: ["strategy", "candidate", "client", "colleague"], ans: "colleague", trans: "林小姐在上班的最後一天收到了一位同事送的漂亮禮物。" },
+                    { q: "Please review the attached _______ before signing the agreement.", options: ["agenda", "notice", "document", "procedure"], ans: "document", trans: "在簽署協議之前，請先審閱隨附的文件。" },
+                    { q: "Clients must reply to this email to _______ their hotel reservations.", options: ["confirm", "postpone", "attend", "contact"], ans: "confirm", trans: "客戶必須回覆這封電子郵件以確認他們的飯店預訂。" },
+                    { q: "The office will remain closed until further _______ due to renovations.", options: ["schedule", "notice", "document", "agenda"], ans: "notice", trans: "由於裝修，辦公室將保持關閉，直到另行通知。" },
+                    { q: "All department managers are required to _______ the annual conference.", options: ["remind", "contact", "attend", "postpone"], ans: "attend", trans: "所有部門經理都必須出席年度會議。" },
+                    { q: "The assistant will _______ the director about the upcoming press event.", options: ["remind", "confirm", "notice", "attend"], ans: "remind", trans: "助理會提醒主任關於即將舉行的記者會活動。" },
+                    { q: "If you have any questions, please feel free to _______ our support team.", options: ["postpone", "contact", "confirm", "remind"], ans: "contact", trans: "如果您有任何問題，請隨時與我們的支援團隊聯絡。" }
+                ]
+            },
+            2: {
+                title: "Day 2 會議與協商單字",
+                vocabulary: [
+                    { word: "negotiate (v.)", zh: "談判；協商", eg: "The company is trying to negotiate a new contract with the supplier.", trans: "公司正試圖與供應商協商一份新合約。", hint: "討論以達成協議。" },
+                    { word: "propose (v.)", zh: "提議；建議", eg: "I would like to propose a short break before we continue the discussion.", trans: "我想在我們繼續討論前提議休息片刻。", hint: "提出一個計畫或想法供考慮。" },
+                    { word: "presentation (n.)", zh: "簡報；演講", eg: "She gave an impressive presentation on the latest market trends.", trans: "她針對最新的市場趨勢做了一場令人印象深刻的簡報。", hint: "向聽眾展示資訊的過程。" },
+                    { word: "delegate (v.)", zh: "委派（權限、職務）；授權", eg: "Effective managers know how to delegate tasks to their team members.", trans: "優秀的經理知道如何將任務委派給團隊成員。", hint: "將職責交給他人處理。" },
+                    { word: "deadline (n.)", zh: "截止日期；期限", eg: "We must work overtime to meet the deadline for the proposal.", trans: "我們必須加班以趕上提案的截止日期。", hint: "必須完成某事的最晚時間點。" },
+                    { word: "minutes (n. pl.)", zh: "會議記錄", eg: "Could you please take the minutes during today's staff meeting?", trans: "可以請你在今天的員工會議中做會議記錄嗎？", hint: "會議中討論與決定事項的正式紀錄。" },
+                    { word: "resolution (n.)", zh: "（會議的）決議；正式決定", eg: "The committee passed a resolution to increase the marketing budget.", trans: "委員會通過了增加行銷預算的決議。", hint: "會議中經過投票或同意後的最終決定。" },
+                    { word: "signature (n.)", zh: "簽名", eg: "We need the director's signature on this document before we can proceed.", trans: "我們需要董事在文件上簽名後才能繼續進行。", hint: "代表身分或同意的手寫姓名。" },
+                    { word: "approve (v.)", zh: "核准；贊成", eg: "The board will meet tomorrow to approve the new project plan.", trans: "董事會將於明天開會以核准新的計畫案。", hint: "正式同意或接受某事物。" },
+                    { word: "revise (v.)", zh: "修訂；修改", eg: "Based on the feedback, we need to revise the financial report.", trans: "根據回饋意見，我們需要修訂財務報告。", hint: "為了改善或更正而改變某物。" }
+                ],
+                quiz: [
+                    { q: "The board of directors passed a _______ to expand the company's operations into Europe.", options: ["resolution", "minutes", "signature", "deadline"], ans: "resolution", trans: "董事會通過了將公司業務拓展至歐洲的決議。" },
+                    { q: "It is important for managers to _______ tasks to their staff to ensure productivity.", options: ["negotiate", "delegate", "propose", "revise"], ans: "delegate", trans: "經理將任務委派給員工以確保生產力是很重要的。" },
+                    { q: "The purchasing manager is scheduled to _______ the terms of the new agreement tomorrow morning.", options: ["approve", "delegate", "negotiate", "revise"], ans: "negotiate", trans: "採購經理預計將於明天上午協商新協議的條款。" },
+                    { q: "The marketing director gave a very persuasive _______ about the annual budget.", options: ["presentation", "resolution", "minutes", "signature"], ans: "presentation", trans: "行銷總監針對年度預算做了一場非常有說服力的簡報。" },
+                    { q: "All employees must submit their reports by the Friday _______ to avoid penalties.", options: ["deadline", "minutes", "presentation", "resolution"], ans: "deadline", trans: "所有員工必須在週五的截止日期前提交報告，以免受罰。" },
+                    { q: "Please ensure that the _______ of the meeting are distributed to all attendees by tomorrow.", options: ["signature", "minutes", "deadline", "presentation"], ans: "minutes", trans: "請確保在明天前將會議記錄發送給所有與會者。" },
+                    { q: "Based on the client's feedback, we need to _______ the initial architectural designs.", options: ["approve", "revise", "propose", "delegate"], ans: "revise", trans: "根據客戶的回饋意見，我們需要修改初始的建築設計。" },
+                    { q: "The contract is not legally binding until it contains the CEO's _______.", options: ["signature", "resolution", "presentation", "minutes"], ans: "signature", trans: "合約在蓋有執行長的簽名之前是不具法律效力的。" },
+                    { q: "The finance department needs to _______ the travel expenses before they can be reimbursed.", options: ["negotiate", "approve", "propose", "delegate"], ans: "approve", trans: "財務部需要核准差旅費用後才能予以報銷。" },
+                    { q: "I would like to _______ a new marketing strategy to reach younger customers.", options: ["revise", "propose", "negotiate", "delegate"], ans: "propose", trans: "我想提議一個新的行銷策略，以接觸更年輕的客群。" }
+                ]
+            }
+
+            /*
+             * 新增 Day 3 範例（複製貼上後填內容即可）：
+             *
+             * 3: {
+             *     title: "Day 3 ...",
+             *     vocabulary: [
+             *         { word: "...", zh: "...", eg: "...", trans: "...", hint: "..." },
+             *     ],
+             *     quiz: [
+             *         { q: "...", options: ["...", "...", "...", "..."], ans: "...", trans: "..." },
+             *     ]
+             * },
+             */
+        };
+
+        // 當前應用狀態
+        let currentDay = 1;
+        let currentMode = 'flashcard'; // 'flashcard' 或 'quiz'
+
+        // 閃卡模式狀態
+        let flashcardIndex = 0;
+        let isFlipped = false;
+        let isHintVisible = false;
+        let activeVocabList = [];
+
+        // 測驗模式狀態
+        let quizIndex = 0;
+        let score = 0;
+        let correctCount = 0; // 獨立計算對題數，不再依賴 score / 10
+        let activeQuizList = [];
+        let isAnswered = false;
+
+        // 初始化
+        window.onload = function() {
+            buildDaySelector();
+            initApp();
+        };
+
+        // 依 dataSet 的 key 動態產生「學習進度」按鈕，新增 Day 時不需要改 HTML
+        function buildDaySelector() {
+            const selector = document.getElementById('day-selector');
+            selector.innerHTML = '';
+            const dayKeys = Object.keys(dataSet).map(Number).sort((a, b) => a - b);
+
+            dayKeys.forEach(dayNum => {
+                const btn = document.createElement('button');
+                btn.id = `btn-day${dayNum}`;
+                btn.innerText = `Day ${dayNum}`;
+                btn.onclick = () => switchDay(dayNum);
+                btn.className = buildDayBtnClass(dayNum === currentDay);
+                selector.appendChild(btn);
+            });
+        }
+
+        function buildDayBtnClass(isActive) {
+            return "flex-1 py-1.5 text-sm font-medium rounded-md transition-all whitespace-nowrap px-3 " +
+                (isActive ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900");
+        }
+
+        function initApp() {
+            // 複製一份資料供操作（打亂時才不影響母檔）
+            activeVocabList = [...dataSet[currentDay].vocabulary];
+            document.getElementById('header-subtitle').innerText = dataSet[currentDay].title;
+
+            // 載入初始單字與測驗
+            loadFlashcard();
+            restartQuiz();
+        }
+
+        // =================== 模式/天數切換 ===================
+        function switchDay(dayNum) {
+            if (!dataSet[dayNum]) return; // 安全防護：避免不存在的 day
+            currentDay = dayNum;
+
+            // 重新產生按鈕外觀（高亮目前選取的 Day）
+            buildDaySelector();
+
+            // 重置閃卡狀態
+            flashcardIndex = 0;
+            isFlipped = false;
+            document.getElementById('flashcard-inner').classList.remove('rotate-y-180');
+            isHintVisible = false;
+            updateHintButtonUI();
+
+            initApp();
+        }
+
+        function switchMode(modeName) {
+            currentMode = modeName;
+
+            document.getElementById('btn-mode-flashcard').className = "flex-1 py-1.5 text-sm font-medium rounded-md transition-all " + (modeName === 'flashcard' ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900");
+            document.getElementById('btn-mode-quiz').className = "flex-1 py-1.5 text-sm font-medium rounded-md transition-all " + (modeName === 'quiz' ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900");
+
+            if (modeName === 'flashcard') {
+                document.getElementById('flashcard-section').classList.remove('hidden');
+                document.getElementById('quiz-section').classList.add('hidden');
+            } else {
+                document.getElementById('flashcard-section').classList.add('hidden');
+                document.getElementById('quiz-section').classList.remove('hidden');
+                restartQuiz(); // 切換到小考就自動重打亂重開
+            }
+        }
+
+        // =================== 閃卡邏輯 ===================
+        function loadFlashcard() {
+            const currentItem = activeVocabList[flashcardIndex];
+
+            // 寫入正面
+            document.getElementById('card-front-text').innerText = currentItem.word;
+
+            // 寫入背面
+            document.getElementById('card-back-title').innerText = currentItem.zh;
+            document.getElementById('card-back-eg').innerText = currentItem.eg;
+            document.getElementById('card-back-trans').innerText = currentItem.trans;
+            document.getElementById('card-hint').innerText = currentItem.hint;
+
+            // 頁數進度
+            document.getElementById('flashcard-progress').innerText = `進度：${flashcardIndex + 1} / ${activeVocabList.length}`;
+
+            // 重置翻面狀態與提示隱藏
+            isFlipped = false;
+            document.getElementById('flashcard-inner').classList.remove('rotate-y-180');
+            isHintVisible = false;
+            updateHintButtonUI();
+        }
+
+        function toggleFlip() {
+            isFlipped = !isFlipped;
+            const innerCard = document.getElementById('flashcard-inner');
+            innerCard.classList.toggle('rotate-y-180', isFlipped);
+        }
+
+        function nextCard() {
+            flashcardIndex = (flashcardIndex + 1) % activeVocabList.length;
+            loadFlashcard();
+        }
+
+        function prevCard() {
+            flashcardIndex = (flashcardIndex - 1 + activeVocabList.length) % activeVocabList.length;
+            loadFlashcard();
+        }
+
+        function shuffleFlashcards() {
+            shuffleArray(activeVocabList);
+            flashcardIndex = 0;
+            loadFlashcard();
+        }
+
+        function toggleHint(event) {
+            event.stopPropagation(); // 阻止氣泡事件避免卡片翻面
+            isHintVisible = !isHintVisible;
+            updateHintButtonUI();
+        }
+
+        function updateHintButtonUI() {
+            const hintBox = document.getElementById('card-hint').parentElement;
+            const hintBtn = document.getElementById('btn-show-hint');
+
+            if (isHintVisible) {
+                hintBox.classList.remove('hidden');
+                hintBtn.innerText = "🌟 隱藏提示";
+                hintBtn.className = "px-5 py-3 bg-amber-200 hover:bg-amber-300 text-amber-900 font-semibold rounded-xl border border-amber-300 transition-colors shadow-sm";
+            } else {
+                hintBox.classList.add('hidden');
+                hintBtn.innerText = "💡 提示";
+                hintBtn.className = "px-5 py-3 bg-amber-50 hover:bg-amber-100 text-amber-700 font-semibold rounded-xl border border-amber-200 transition-colors shadow-sm";
+            }
+        }
+
+        // 真人發音功能
+        function speakCurrentWord(event) {
+            event.stopPropagation(); // 防止翻牌
+            const wordWithSpeechType = activeVocabList[flashcardIndex].word;
+            // 排除 (v.) / (n.) 標記只念單字本體
+            const cleanWord = wordWithSpeechType.split(' ')[0];
+
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // 避免連續點擊時語音堆疊
+                const utterance = new SpeechSynthesisUtterance(cleanWord);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.85; // 稍慢讓學生聽清楚
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("抱歉，您的瀏覽器不支援發音功能。");
+            }
+        }
+
+
+        // =================== 互動小考邏輯 ===================
+        function loadQuiz() {
+            if (quizIndex >= activeQuizList.length) {
+                showQuizResult();
+                return;
+            }
+
+            const currentQ = activeQuizList[quizIndex];
+
+            // 更新進度與分數
+            document.getElementById('quiz-progress-text').innerText = `第 ${quizIndex + 1} / ${activeQuizList.length} 題`;
+            document.getElementById('quiz-score-badge').innerText = `目前得分：${score} 分`;
+            const percent = ((quizIndex + 1) / activeQuizList.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${percent}%`;
+
+            // 寫入題目內容
+            document.getElementById('quiz-question-text').innerText = currentQ.q;
+
+            // 隨機渲染選項
+            const optionsContainer = document.getElementById('quiz-options-container');
+            optionsContainer.innerHTML = '';
+
+            // 複製一份選項並打亂
+            const shuffledOptions = shuffleArray([...currentQ.options]);
+
+            // 產生選項按鈕（用 data-option 存實際選項文字，避免 includes() 子字串誤判）
+            shuffledOptions.forEach((optionText, idx) => {
+                const btn = document.createElement('button');
+                btn.dataset.option = optionText;
+                btn.className = "w-full text-left py-3.5 px-5 bg-white hover:bg-slate-50 text-slate-700 font-medium rounded-xl border border-slate-200 transition-all shadow-sm focus:outline-none flex items-center justify-between group";
+                btn.innerHTML = `
+                    <span>${String.fromCharCode(65 + idx)}. &nbsp; ${optionText}</span>
+                    <span class="opacity-0 group-hover:opacity-100 transition-opacity text-indigo-500">選擇 ➔</span>
+                `;
+                btn.onclick = () => submitAnswer(optionText, btn, currentQ.ans);
+                optionsContainer.appendChild(btn);
+            });
+
+            // 隱藏解析回饋框
+            document.getElementById('quiz-feedback-box').classList.add('hidden');
+            isAnswered = false;
+        }
+
+        function submitAnswer(selectedText, buttonElement, correctText) {
+            if (isAnswered) return; // 防止重複點選
+            isAnswered = true;
+
+            const isCorrect = (selectedText === correctText);
+
+            // 禁用全部按鈕，並用 data-option 精準比對正確答案（避免子字串誤判）
+            const allButtons = document.getElementById('quiz-options-container').querySelectorAll('button');
+            allButtons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.dataset.option === correctText) {
+                    btn.className = "w-full text-left py-3.5 px-5 bg-emerald-50 text-emerald-800 font-bold rounded-xl border-2 border-emerald-500 transition-all shadow-sm flex items-center justify-between";
+                    btn.innerHTML += `<span class="text-emerald-600 font-bold">✓ 正確</span>`;
+                }
+            });
+
+            if (isCorrect) {
+                score += 10;
+                correctCount += 1;
+                document.getElementById('feedback-emoji').innerText = "🎉";
+                document.getElementById('feedback-status').innerText = "回答正確！";
+                document.getElementById('feedback-status').className = "text-base font-bold text-emerald-600";
+            } else {
+                // 選錯的按鈕標記紅色
+                buttonElement.className = "w-full text-left py-3.5 px-5 bg-rose-50 text-rose-800 font-bold rounded-xl border-2 border-rose-500 transition-all shadow-sm flex items-center justify-between";
+                buttonElement.innerHTML += `<span class="text-rose-600 font-bold">✗ 答錯</span>`;
+
+                document.getElementById('feedback-emoji').innerText = "💡";
+                document.getElementById('feedback-status').innerText = "再接再厲！";
+                document.getElementById('feedback-status').className = "text-base font-bold text-rose-600";
+            }
+
+            // 填寫解析
+            document.getElementById('feedback-explanation').innerHTML = `
+                <div class="text-slate-500 text-xs mb-1">整句翻譯：</div>
+                <div class="font-medium text-slate-800">${activeQuizList[quizIndex].trans}</div>
+            `;
+
+            // 顯示解析回饋框
+            document.getElementById('quiz-feedback-box').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            quizIndex++;
+            loadQuiz();
+        }
+
+        function showQuizResult() {
+            // 隱藏問題與選項，顯示結算畫面
+            document.getElementById('quiz-progress-wrapper').classList.add('hidden');
+            document.getElementById('quiz-question-wrapper').classList.add('hidden');
+            document.getElementById('quiz-options-container').classList.add('hidden');
+            document.getElementById('quiz-feedback-box').classList.add('hidden');
+
+            document.getElementById('quiz-result-screen').classList.remove('hidden');
+            document.getElementById('quiz-final-score').innerText = score;
+            document.getElementById('quiz-correct-count').innerText = `答對 ${correctCount} 題 / 共 ${activeQuizList.length} 題`;
+        }
+
+        function restartQuiz() {
+            // 重置分數與索引
+            score = 0;
+            correctCount = 0;
+            quizIndex = 0;
+            isAnswered = false;
+
+            // 隨機打亂題目庫
+            activeQuizList = shuffleArray([...dataSet[currentDay].quiz]);
+
+            // 顯示原本小考的元件，隱藏結算
+            document.getElementById('quiz-progress-wrapper').classList.remove('hidden');
+            document.getElementById('quiz-question-wrapper').classList.remove('hidden');
+            document.getElementById('quiz-options-container').classList.remove('hidden');
+            document.getElementById('quiz-result-screen').classList.add('hidden');
+
+            loadQuiz();
+        }
+
+        // 共用洗牌函式（Fisher-Yates），避免重複程式碼
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+    </script>
+</body>
+</html>

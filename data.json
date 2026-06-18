@@ -52,5 +52,32 @@
       {"q": "The finance department needs to _______ the travel expenses before they can be reimbursed.", "options": ["negotiate", "approve", "propose", "delegate"], "ans": "approve", "trans": "財務部需要核准差旅費用後才能予以報銷。"},
       {"q": "I would like to _______ a new marketing strategy to reach younger customers.", "options": ["revise", "propose", "negotiate", "delegate"], "ans": "propose", "trans": "我想提議一個新的行銷策略，以接觸更年輕的客群。"}
     ]
+  },
+  "3": {
+    "title": "Day 3 行銷與銷售",
+    "vocabulary": [
+      {"word": "launch (v./n.)", "zh": "發表、推出（新產品）；開辦（新事業）", "eg": "The technology startup plans to launch its new application next month.", "trans": "這家科技新創公司計劃在下個月推出其新的應用程式。", "hint": "推出新產品或服務到市場上。"},
+      {"word": "campaign (n.)", "zh": "（有組織的商業或政治）活動、宣傳活動", "eg": "The marketing department is launching a new advertising campaign to attract younger customers.", "trans": "行銷部門正在發起一項新的廣告宣傳活動，以吸引年輕一代的顧客。", "hint": "有計畫的營銷推廣活動。"},
+      {"word": "target (v./n.)", "zh": "以……為目標；目標、靶子", "eg": "Our current sales strategies target professionals aged 25 to 40.", "trans": "我們目前的銷售策略以 25 至 40 歲的專業人士為目標客群。", "hint": "針對特定的客群或市場。"},
+      {"word": "promote (v.)", "zh": "促銷、宣傳；晉升", "eg": "The company launched a social media event to promote its organic products.", "trans": "公司舉辦了社群媒體活動來促銷其有機產品。", "hint": "透過活動或廣告宣傳某物。"},
+      {"word": "feedback (n.)", "zh": "回饋意見、反應", "eg": "We welcome customer feedback as it helps us improve our services.", "trans": "我們歡迎客戶的回饋意見，因為這能幫助我們改進服務。", "hint": "客戶或使用者對產品或服務的看法。"},
+      {"word": "distribution (n.)", "zh": "分銷、分配、分發", "eg": "The logistics manager is in charge of product distribution across North America.", "trans": "物流經理負責整個北美地區的產品分銷與配送。", "hint": "將產品運送到各個銷售點。"},
+      {"word": "competitive (adj.)", "zh": "競爭激烈的、有競爭力的", "eg": "To stay competitive, we need to constantly innovate our product line.", "trans": "為了保持競爭力，我們需要不斷創新我們的產品線。", "hint": "能夠在市場競爭中保持優勢。"},
+      {"word": "strategy (n.)", "zh": "策略、戰略", "eg": "The board of directors will discuss the long-term growth strategy tomorrow.", "trans": "董事會明天將討論長期的成長策略。", "hint": "達成目標的長期計畫。"},
+      {"word": "consumer (n.)", "zh": "消費者", "eg": "Consumer spending has increased significantly during the holiday season.", "trans": "在節日期間，消費者支出有顯著的增長。", "hint": "購買或使用商品和服務的人。"},
+      {"word": "analyze (v.)", "zh": "分析", "eg": "Analysts will analyze the market data to predict future trends.", "trans": "分析師將分析市場數據以預測未來的市場趨勢。", "hint": "詳細檢視和研究某事物。"}
+    ],
+    "quiz": [
+      {"q": "The technology startup plans to _______ its new application next month.", "options": ["launch", "campaign", "strategy", "promote"], "ans": "launch", "trans": "這家科技新創公司計劃在下個月推出其新的應用程式。"},
+      {"q": "The marketing department is launching a new advertising _______ to attract younger customers.", "options": ["campaign", "strategy", "feedback", "distribution"], "ans": "campaign", "trans": "行銷部門正在發起一項新的廣告宣傳活動，以吸引年輕一代的顧客。"},
+      {"q": "Our current sales strategies _______ professionals aged 25 to 40.", "options": ["target", "analyze", "promote", "launch"], "ans": "target", "trans": "我們目前的銷售策略以 25 至 40 歲的專業人士為目標客群。"},
+      {"q": "The company launched a social media event to _______ its organic products.", "options": ["promote", "launch", "distribute", "analyze"], "ans": "promote", "trans": "公司舉辦了社群媒體活動來促銷其有機產品。"},
+      {"q": "We welcome customer _______ as it helps us improve our services.", "options": ["feedback", "input", "response", "strategy"], "ans": "feedback", "trans": "我們歡迎客戶的回饋意見，因為這能幫助我們改進服務。"},
+      {"q": "The logistics manager is in charge of product _______ across North America.", "options": ["distribution", "delivery", "shipment", "strategy"], "ans": "distribution", "trans": "物流經理負責整個北美地區的產品分銷與配送。"},
+      {"q": "To stay _______, we need to constantly innovate our product line.", "options": ["competitive", "active", "engaged", "strategic"], "ans": "competitive", "trans": "為了保持競爭力，我們需要不斷創新我們的產品線。"},
+      {"q": "The board of directors will discuss the long-term growth _______ tomorrow.", "options": ["strategy", "plan", "direction", "approach"], "ans": "strategy", "trans": "董事會明天將討論長期的成長策略。"},
+      {"q": "_______ spending has increased significantly during the holiday season.", "options": ["Consumer", "Customer", "Buyer", "Purchaser"], "ans": "Consumer", "trans": "在節日期間，消費者支出有顯著的增長。"},
+      {"q": "Analysts will _______ the market data to predict future trends.", "options": ["analyze", "examine", "study", "research"], "ans": "analyze", "trans": "分析師將分析市場數據以預測未來的市場趨勢。"}
+    ]
   }
 }

@@ -79,5 +79,32 @@
       {"q": "_______ spending has increased significantly during the holiday season.", "options": ["Consumer", "Customer", "Buyer", "Purchaser"], "ans": "Consumer", "trans": "在節日期間，消費者支出有顯著的增長。"},
       {"q": "Analysts will _______ the market data to predict future trends.", "options": ["analyze", "examine", "study", "research"], "ans": "analyze", "trans": "分析師將分析市場數據以預測未來的市場趨勢。"}
     ]
+  },
+  "4": {
+    "title": "Day 4 財務與預算",
+    "vocabulary": [
+      {"word": "budget (n./v.)", "zh": "預算；編列預算", "eg": "The department was forced to cut its marketing budget for the next fiscal year.", "trans": "該部門被迫削減下一個財政年度的行銷預算。", "hint": "計畫中的財務支出安排。"},
+      {"word": "expense (n.)", "zh": "費用、支出、開支", "eg": "Travel expenses must be approved by the manager before they can be reimbursed.", "trans": "差旅費用必須先經經理核准後才能申請報銷。", "hint": "為了某事而花費的金錢。"},
+      {"word": "revenue (n.)", "zh": "收入、收益（常指公司或國家的總收入）", "eg": "The company reported a 15% increase in annual revenue.", "trans": "該公司報告年度總營收增長了 15%。", "hint": "公司或組織通過銷售所得到的收入。"},
+      {"word": "profit (n./v.)", "zh": "利潤、收益；獲利", "eg": "Our net profits have doubled since we launched the online store.", "trans": "自從我們開設線上商店以來，我們的淨利潤已經增加了一倍。", "hint": "收入扣除所有成本和費用後的剩餘部分。"},
+      {"word": "financial (adj.)", "zh": "財務的、金融的", "eg": "You should seek professional financial advice before investing a large sum of money.", "trans": "在投資大筆資金之前，你應該尋求專業的財務建議。", "hint": "與金錢和財務事務相關的。"},
+      {"word": "invoice (n.)", "zh": "發票、費用清單、請款單", "eg": "Please send the invoice to our accounting department for processing.", "trans": "請將發票發送至我們的會計部門以進行後續處理。", "hint": "詳細列出商品或服務費用的文件。"},
+      {"word": "invest (v.)", "zh": "投資", "eg": "The firm decided to invest millions of dollars in renewable energy research.", "trans": "該公司決定投資數百萬美元於再生能源的研究。", "hint": "把金錢投入某個事業或計畫以期獲得回報。"},
+      {"word": "fund (n./v.)", "zh": "資金、基金；資助、提供資金", "eg": "The organization set up a special fund to support local startups.", "trans": "該機構設立了專門的基金來支持本地的新創企業。", "hint": "用於特定目的的資金或金錢。"},
+      {"word": "transaction (n.)", "zh": "交易、買賣", "eg": "Secure encryption technology protects all online transactions from unauthorized access.", "trans": "安全的加密技術可保護所有線上交易免受未經授權的存取。", "hint": "兩方之間進行的買賣或交換活動。"},
+      {"word": "deficit (n.)", "zh": "赤字、虧損", "eg": "The government is trying to reduce the budget deficit by cutting unnecessary spending.", "trans": "政府正試圖透過削減不必要的開支來減少預算赤字。", "hint": "支出大於收入所導致的短差。"}
+    ],
+    "quiz": [
+      {"q": "The department was forced to cut its marketing _______ for the next fiscal year.", "options": ["budget", "expenses", "costs", "funds"], "ans": "budget", "trans": "該部門被迫削減下一個財政年度的行銷預算。"},
+      {"q": "Travel _______ must be approved by the manager before they can be reimbursed.", "options": ["expense", "fees", "charges", "costs"], "ans": "expense", "trans": "差旅費用必須先經經理核准後才能申請報銷。"},
+      {"q": "The company reported a 15% increase in annual _______.", "options": ["revenue", "profit", "income", "earnings"], "ans": "revenue", "trans": "該公司報告年度總營收增長了 15%。"},
+      {"q": "Our net _______ have doubled since we launched the online store.", "options": ["profit", "revenues", "earnings", "gains"], "ans": "profit", "trans": "自從我們開設線上商店以來，我們的淨利潤已經增加了一倍。"},
+      {"q": "You should seek professional _______ advice before investing a large sum of money.", "options": ["financial", "money", "investment", "monetary"], "ans": "financial", "trans": "在投資大筆資金之前，你應該尋求專業的財務建議。"},
+      {"q": "Please send the _______ to our accounting department for processing.", "options": ["invoice", "receipt", "bill", "statement"], "ans": "invoice", "trans": "請將發票發送至我們的會計部門以進行後續處理。"},
+      {"q": "The firm decided to _______ millions of dollars in renewable energy research.", "options": ["invest", "spend", "allocate", "commit"], "ans": "invest", "trans": "該公司決定投資數百萬美元於再生能源的研究。"},
+      {"q": "The organization set up a special _______ to support local startups.", "options": ["fund", "account", "reserve", "pool"], "ans": "fund", "trans": "該機構設立了專門的基金來支持本地的新創企業。"},
+      {"q": "Secure encryption technology protects all online _______ from unauthorized access.", "options": ["transaction", "transfer", "payment", "exchange"], "ans": "transaction", "trans": "安全的加密技術可保護所有線上交易免受未經授權的存取。"},
+      {"q": "The government is trying to reduce the budget _______ by cutting unnecessary spending.", "options": ["deficit", "gap", "loss", "shortage"], "ans": "deficit", "trans": "政府正試圖透過削減不必要的開支來減少預算赤字。"}
+    ]
   }
 }
